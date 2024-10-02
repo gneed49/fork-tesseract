@@ -24,7 +24,7 @@ build_script:
   - sw -version
   # -show-output - show command output
   # debug build causes long builds (> 1h), appveyor drops them
-  - sw -platform %platform% -config r build -Dwith-tests=0 -j4
+  - sw -platform %platform% -config r build -Dwith-tests=0 -j=4
   # # test
   # - git clone https://github.com/egorpugin/tessdata tessdata_unittest
   # - ps: Copy-Item -Path "tessdata_unittest\fonts\*" -Destination "test\testing" -Recurse
