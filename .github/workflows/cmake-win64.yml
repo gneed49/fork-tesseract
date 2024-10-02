@@ -1,5 +1,5 @@
 # Based on https://github.com/zdenop/tesserocr/actions/runs/691257659/workflow
-# Build Tesseract on Windows using cmake. No Training Tools.
+# Build Tesseract on Windows using cmake. No Training Tools.  
 name: cmake-win64
 on:
   #push:
