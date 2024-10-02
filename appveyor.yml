@@ -14,11 +14,8 @@ only_commits:
     - appveyor.yml
     - '**.cpp'
     - '**.h'
-    # - 'unittest/**.c'
-    # - 'unittest/**.cc'
 
 before_build:
-  - git submodule update --init --recursive
   - curl -fsS -L -o dl.zip https://software-network.org/client/sw-master-windows_x86_64-client.zip
   - 7z x dl.zip
   - set PATH=%PATH%;%cd%
@@ -27,7 +24,7 @@ build_script:
   - sw -version
   # -show-output - show command output
   # debug build causes long builds (> 1h), appveyor drops them
-  - sw -platform %platform% -config r build -Dwith-tests=1
+  - sw -platform %platform% -config r build -Dwith-tests=0 -j4
   # # test
   # - git clone https://github.com/egorpugin/tessdata tessdata_unittest
   # - ps: Copy-Item -Path "tessdata_unittest\fonts\*" -Destination "test\testing" -Recurse
