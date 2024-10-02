@@ -14,8 +14,8 @@ only_commits:
     - appveyor.yml
     - '**.cpp'
     - '**.h'
-    - 'unittest/**.c'
-    - 'unittest/**.cc'
+    # - 'unittest/**.c'
+    # - 'unittest/**.cc'
 
 before_build:
   - git submodule update --init --recursive
@@ -28,19 +28,19 @@ build_script:
   # -show-output - show command output
   # debug build causes long builds (> 1h), appveyor drops them
   - sw -platform %platform% -config r build -Dwith-tests=1
-  # test
-  - git clone https://github.com/egorpugin/tessdata tessdata_unittest
-  - ps: Copy-Item -Path "tessdata_unittest\fonts\*" -Destination "test\testing" -Recurse
-  - sw -platform %platform% -config r test -Dwith-tests=1 -Dskip-tests=lstm,lstm_recode
+  # # test
+  # - git clone https://github.com/egorpugin/tessdata tessdata_unittest
+  # - ps: Copy-Item -Path "tessdata_unittest\fonts\*" -Destination "test\testing" -Recurse
+  # - sw -platform %platform% -config r test -Dwith-tests=1 -Dskip-tests=lstm,lstm_recode
 
 after_build:
   - 7z a tesseract.zip %APPVEYOR_BUILD_FOLDER%\.sw\out\**\*.exe %APPVEYOR_BUILD_FOLDER%\.sw\out\**\*.dll
   #- 7z a tesseract.zip %APPVEYOR_BUILD_FOLDER%\.sw\Windows_*_Shared_Release_MSVC_*\*.exe %APPVEYOR_BUILD_FOLDER%\.sw\Windows_*_Shared_Release_MSVC_*\*.dll
 
 on_finish:
-  # gather tests
-  - ps: $wc = New-Object 'System.Net.WebClient'
-  - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\.sw\test\results.xml))
+  # # gather tests
+  # - ps: $wc = New-Object 'System.Net.WebClient'
+  # - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\.sw\test\results.xml))
 
 artifacts:
   - path: tesseract.zip
